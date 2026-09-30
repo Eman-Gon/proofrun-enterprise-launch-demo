@@ -18,7 +18,19 @@ The existing baseline test files are unchanged in both later revisions.
 
 Browser rehearsal confirmed that the release candidate previews two CSV records,
 visibly reports the successful-but-changed identifier, and displays HTTP 422 for
-the partner account. All response cards use actual API responses.
+the partner account. The baseline preserves the legacy ID and disables CSV
+preview. The fixed browser version preserves the legacy ID and previews all
+three legacy/partner sample records successfully. All response cards use actual
+API responses.
+
+The generated registry and request were also validated with ProofRun's real
+configuration schema, then the three exact snapshots were exercised through
+its actual Docker test and HTTP runtime. All ordinary suites passed, the same
+candidate regressions were reproduced, and the reference fix retained CSV
+preview. That separate [runtime receipt](runtime-verification.json) records
+immutable image IDs, isolated network execution, read-only source mounts and
+the independent HTTP collector. These checks were operator-selected with zero
+model calls; they do not establish an autonomous agent discovery.
 
 The reference fix changes the ID helper and release label. It retains the new
 CSV endpoint, preview implementation and ten feature tests. It is prepared

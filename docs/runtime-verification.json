@@ -1,0 +1,367 @@
+{
+  "schema": "proofrun.operator-runtime-check.v1",
+  "selection": "operator-selected probes and reference revisions",
+  "agent_discovery": false,
+  "model_calls": 0,
+  "repair_provenance": "pre-authored reference fix; no agent repair attempted",
+  "created_at": "2026-09-30T01:29:12.284801+00:00",
+  "completed_at": "2026-09-30T01:29:31.396417+00:00",
+  "validated_with": [
+    "proofrun.release_contracts.load_targets",
+    "proofrun.release_contracts.validate_request"
+  ],
+  "executed_with": [
+    "proofrun.release_repository.snapshot",
+    "proofrun.release_runtime.run_tests",
+    "proofrun.release_runtime.run_probe"
+  ],
+  "request": {
+    "target_id": "northstar-enterprise-launch",
+    "baseline_revision": "2faecc5f99c1729325bc7ad272d9c79a2bc82e24",
+    "candidate_revision": "641de102d613dd1b5e361ff8751ee97802cf74d8",
+    "benefit": "Enable enterprise teams to preview a CSV customer import and identify invalid or duplicate rows before onboarding.",
+    "budget_seconds": 300,
+    "repair": true
+  },
+  "contract_hash": "8ebb09d270ce29068ffe6dcc9db5e95764b4ba1940e253fe6e9a759fa34a916c",
+  "probes": [
+    {
+      "method": "POST",
+      "path": "/customers/import",
+      "json": {
+        "customer_id": "12345",
+        "name": "Control customer"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/customers/import",
+      "json": {
+        "customer_id": "00123",
+        "name": "Legacy customer"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/customers/import",
+      "json": {
+        "customer_id": "abc-123",
+        "name": "Partner customer"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/imports/preview",
+      "json": {
+        "csv": "customer_id,name\n12345,Control customer\n67890,Second customer\n"
+      }
+    }
+  ],
+  "complete": true,
+  "revisions": {
+    "v1.0.0": {
+      "revision": "2faecc5f99c1729325bc7ad272d9c79a2bc82e24",
+      "release_suite": {
+        "execution_status": "completed",
+        "test_status": "passed",
+        "exit_code": 0,
+        "observations": [],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "19bceb7dd3a9959b5c96348b1136729f988080b095a2bc447f505194d549d69e",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "docker_exit"
+        },
+        "output_tail": "test_array_rejected (test_existing.ExistingHttpTests.test_array_rejected) ... ok\ntest_content_type (test_existing.ExistingHttpTests.test_content_type) ... ok\ntest_empty_id_rejected (test_existing.ExistingHttpTests.test_empty_id_rejected) ... ok\ntest_health (test_existing.ExistingHttpTests.test_health) ... ok\ntest_homepage (test_existing.ExistingHttpTests.test_homepage) ... ok\ntest_invalid_json (test_existing.ExistingHttpTests.test_invalid_json) ... ok\ntest_invalid_name_rejected (test_existing.ExistingHttpTests.test_invalid_name_rejected) ... ok\ntest_large_request_rejected (test_existing.ExistingHttpTests.test_large_request_rejected) ... ok\ntest_missing_name_rejected (test_existing.ExistingHttpTests.test_missing_name_rejected) ... ok\ntest_numeric_id_rejected (test_existing.ExistingHttpTests.test_numeric_id_rejected) ... ok\ntest_object_id_rejected (test_existing.ExistingHttpTests.test_object_id_rejected) ... ok\ntest_ordinary_customer (test_existing.ExistingHttpTests.test_ordinary_customer) ... ok\ntest_repeatable_import (test_existing.ExistingHttpTests.test_repeatable_import) ... ok\ntest_unknown_route (test_existing.ExistingHttpTests.test_unknown_route) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.422s\n\nOK",
+        "complete": true
+      },
+      "http_probe": {
+        "execution_status": "completed",
+        "observations": [
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "12345",
+                "name": "Control customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "00123",
+                "name": "Legacy customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "abc-123",
+                "name": "Partner customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 404,
+            "json": {
+              "error": "not_found"
+            }
+          }
+        ],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "d527d6e74769151624e005f83cb455d159226e9d9f090ec1bf5a48f71b8a8ed3",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "isolated_http_sidecar",
+          "collector_image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "collector_code_sha256": {
+            "release_runtime.py": "c0a2eb8f1819b7120756f3afc6ab8d80b1d69527895e6060b9d54426280dc467",
+            "release_http_collector.py": "313af613a36820c6e808e9dd1d74fcf858488dd5512e3462fbe443e041d21022"
+          }
+        },
+        "complete": true
+      },
+      "expected_outcomes_confirmed": true,
+      "source_tree_hash": "586b0f1997b3aa9fb012e96ca605ea13e6d3e6930a0162a2ee00e19c6b0853f0"
+    },
+    "v1.1.0-rc1": {
+      "revision": "641de102d613dd1b5e361ff8751ee97802cf74d8",
+      "release_suite": {
+        "execution_status": "completed",
+        "test_status": "passed",
+        "exit_code": 0,
+        "observations": [],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "caa3a06ba86ebc6c55a42fe3b38b43c1a07d3b873de2c1dbb0f2f15e12e3d4c4",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "docker_exit"
+        },
+        "output_tail": "test_accepts_one_hundred_rows_and_rejects_more (test_bulk.BulkPreviewTests.test_accepts_one_hundred_rows_and_rejects_more) ... ok\ntest_duplicates_are_rejected_after_the_first_row (test_bulk.BulkPreviewTests.test_duplicates_are_rejected_after_the_first_row) ... ok\ntest_empty_and_bad_headers_are_invalid_csv (test_bulk.BulkPreviewTests.test_empty_and_bad_headers_are_invalid_csv) ... ok\ntest_extra_values_are_invalid_customer_rows (test_bulk.BulkPreviewTests.test_extra_values_are_invalid_customer_rows) ... ok\ntest_invalid_rows_do_not_block_valid_rows (test_bulk.BulkPreviewTests.test_invalid_rows_do_not_block_valid_rows) ... ok\ntest_malformed_csv_is_rejected (test_bulk.BulkPreviewTests.test_malformed_csv_is_rejected) ... ok\ntest_multiple_customers_are_ready (test_bulk.BulkPreviewTests.test_multiple_customers_are_ready) ... ok\ntest_non_csv_payloads_are_rejected (test_bulk.BulkPreviewTests.test_non_csv_payloads_are_rejected) ... ok\ntest_quoted_names_remain_intact (test_bulk.BulkPreviewTests.test_quoted_names_remain_intact) ... ok\ntest_rejected_row_does_not_reserve_its_customer_id (test_bulk.BulkPreviewTests.test_rejected_row_does_not_reserve_its_customer_id) ... ok\ntest_array_rejected (test_existing.ExistingHttpTests.test_array_rejected) ... ok\ntest_content_type (test_existing.ExistingHttpTests.test_content_type) ... ok\ntest_empty_id_rejected (test_existing.ExistingHttpTests.test_empty_id_rejected) ... ok\ntest_health (test_existing.ExistingHttpTests.test_health) ... ok\ntest_homepage (test_existing.ExistingHttpTests.test_homepage) ... ok\ntest_invalid_json (test_existing.ExistingHttpTests.test_invalid_json) ... ok\ntest_invalid_name_rejected (test_existing.ExistingHttpTests.test_invalid_name_rejected) ... ok\ntest_large_request_rejected (test_existing.ExistingHttpTests.test_large_request_rejected) ... ok\ntest_missing_name_rejected (test_existing.ExistingHttpTests.test_missing_name_rejected) ... ok\ntest_numeric_id_rejected (test_existing.ExistingHttpTests.test_numeric_id_rejected) ... ok\ntest_object_id_rejected (test_existing.ExistingHttpTests.test_object_id_rejected) ... ok\ntest_ordinary_customer (test_existing.ExistingHttpTests.test_ordinary_customer) ... ok\ntest_repeatable_import (test_existing.ExistingHttpTests.test_repeatable_import) ... ok\ntest_unknown_route (test_existing.ExistingHttpTests.test_unknown_route) ... ok\n\n----------------------------------------------------------------------\nRan 24 tests in 0.431s\n\nOK",
+        "complete": true
+      },
+      "http_probe": {
+        "execution_status": "completed",
+        "observations": [
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "12345",
+                "name": "Control customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "123",
+                "name": "Legacy customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 422,
+            "json": {
+              "error": "invalid_customer"
+            }
+          },
+          {
+            "status": 200,
+            "json": {
+              "total": 2,
+              "ready": 2,
+              "rejected": 0,
+              "rows": [
+                {
+                  "row": 2,
+                  "status": "ready",
+                  "customer": {
+                    "customer_id": "12345",
+                    "name": "Control customer"
+                  }
+                },
+                {
+                  "row": 3,
+                  "status": "ready",
+                  "customer": {
+                    "customer_id": "67890",
+                    "name": "Second customer"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "930de08171f30b454c74ba784af31902b6058dda8cedde2f51bc4f4da0ac1b62",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "isolated_http_sidecar",
+          "collector_image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "collector_code_sha256": {
+            "release_runtime.py": "c0a2eb8f1819b7120756f3afc6ab8d80b1d69527895e6060b9d54426280dc467",
+            "release_http_collector.py": "313af613a36820c6e808e9dd1d74fcf858488dd5512e3462fbe443e041d21022"
+          }
+        },
+        "complete": true
+      },
+      "expected_outcomes_confirmed": true,
+      "source_tree_hash": "b820f25035f2d437b06b2a36343dafac00cb663b0c3baf4444333a70b93acfc9",
+      "frozen_baseline_suite": {
+        "execution_status": "completed",
+        "test_status": "passed",
+        "exit_code": 0,
+        "observations": [],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "f8205e363be5cf9e4227798967fdbad506ece9691770e70c463da95e2c6725e5",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "docker_exit"
+        },
+        "output_tail": "test_array_rejected (test_existing.ExistingHttpTests.test_array_rejected) ... ok\ntest_content_type (test_existing.ExistingHttpTests.test_content_type) ... ok\ntest_empty_id_rejected (test_existing.ExistingHttpTests.test_empty_id_rejected) ... ok\ntest_health (test_existing.ExistingHttpTests.test_health) ... ok\ntest_homepage (test_existing.ExistingHttpTests.test_homepage) ... ok\ntest_invalid_json (test_existing.ExistingHttpTests.test_invalid_json) ... ok\ntest_invalid_name_rejected (test_existing.ExistingHttpTests.test_invalid_name_rejected) ... ok\ntest_large_request_rejected (test_existing.ExistingHttpTests.test_large_request_rejected) ... ok\ntest_missing_name_rejected (test_existing.ExistingHttpTests.test_missing_name_rejected) ... ok\ntest_numeric_id_rejected (test_existing.ExistingHttpTests.test_numeric_id_rejected) ... ok\ntest_object_id_rejected (test_existing.ExistingHttpTests.test_object_id_rejected) ... ok\ntest_ordinary_customer (test_existing.ExistingHttpTests.test_ordinary_customer) ... ok\ntest_repeatable_import (test_existing.ExistingHttpTests.test_repeatable_import) ... ok\ntest_unknown_route (test_existing.ExistingHttpTests.test_unknown_route) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.310s\n\nOK",
+        "complete": true
+      }
+    },
+    "v1.1.0-fixed": {
+      "revision": "6ffbc6b9f4c8173e13f904bfcb8af4a5293aeb22",
+      "release_suite": {
+        "execution_status": "completed",
+        "test_status": "passed",
+        "exit_code": 0,
+        "observations": [],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "66f183e4e73e298589057408a4dd41d24cdca99fb386eb50605f78e595e9e079",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "docker_exit"
+        },
+        "output_tail": "test_accepts_one_hundred_rows_and_rejects_more (test_bulk.BulkPreviewTests.test_accepts_one_hundred_rows_and_rejects_more) ... ok\ntest_duplicates_are_rejected_after_the_first_row (test_bulk.BulkPreviewTests.test_duplicates_are_rejected_after_the_first_row) ... ok\ntest_empty_and_bad_headers_are_invalid_csv (test_bulk.BulkPreviewTests.test_empty_and_bad_headers_are_invalid_csv) ... ok\ntest_extra_values_are_invalid_customer_rows (test_bulk.BulkPreviewTests.test_extra_values_are_invalid_customer_rows) ... ok\ntest_invalid_rows_do_not_block_valid_rows (test_bulk.BulkPreviewTests.test_invalid_rows_do_not_block_valid_rows) ... ok\ntest_malformed_csv_is_rejected (test_bulk.BulkPreviewTests.test_malformed_csv_is_rejected) ... ok\ntest_multiple_customers_are_ready (test_bulk.BulkPreviewTests.test_multiple_customers_are_ready) ... ok\ntest_non_csv_payloads_are_rejected (test_bulk.BulkPreviewTests.test_non_csv_payloads_are_rejected) ... ok\ntest_quoted_names_remain_intact (test_bulk.BulkPreviewTests.test_quoted_names_remain_intact) ... ok\ntest_rejected_row_does_not_reserve_its_customer_id (test_bulk.BulkPreviewTests.test_rejected_row_does_not_reserve_its_customer_id) ... ok\ntest_array_rejected (test_existing.ExistingHttpTests.test_array_rejected) ... ok\ntest_content_type (test_existing.ExistingHttpTests.test_content_type) ... ok\ntest_empty_id_rejected (test_existing.ExistingHttpTests.test_empty_id_rejected) ... ok\ntest_health (test_existing.ExistingHttpTests.test_health) ... ok\ntest_homepage (test_existing.ExistingHttpTests.test_homepage) ... ok\ntest_invalid_json (test_existing.ExistingHttpTests.test_invalid_json) ... ok\ntest_invalid_name_rejected (test_existing.ExistingHttpTests.test_invalid_name_rejected) ... ok\ntest_large_request_rejected (test_existing.ExistingHttpTests.test_large_request_rejected) ... ok\ntest_missing_name_rejected (test_existing.ExistingHttpTests.test_missing_name_rejected) ... ok\ntest_numeric_id_rejected (test_existing.ExistingHttpTests.test_numeric_id_rejected) ... ok\ntest_object_id_rejected (test_existing.ExistingHttpTests.test_object_id_rejected) ... ok\ntest_ordinary_customer (test_existing.ExistingHttpTests.test_ordinary_customer) ... ok\ntest_repeatable_import (test_existing.ExistingHttpTests.test_repeatable_import) ... ok\ntest_unknown_route (test_existing.ExistingHttpTests.test_unknown_route) ... ok\n\n----------------------------------------------------------------------\nRan 24 tests in 0.634s\n\nOK",
+        "complete": true
+      },
+      "http_probe": {
+        "execution_status": "completed",
+        "observations": [
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "12345",
+                "name": "Control customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "00123",
+                "name": "Legacy customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 201,
+            "json": {
+              "customer": {
+                "customer_id": "abc-123",
+                "name": "Partner customer"
+              },
+              "imported": true
+            }
+          },
+          {
+            "status": 200,
+            "json": {
+              "total": 2,
+              "ready": 2,
+              "rejected": 0,
+              "rows": [
+                {
+                  "row": 2,
+                  "status": "ready",
+                  "customer": {
+                    "customer_id": "12345",
+                    "name": "Control customer"
+                  }
+                },
+                {
+                  "row": 3,
+                  "status": "ready",
+                  "customer": {
+                    "customer_id": "67890",
+                    "name": "Second customer"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "a877e9b447155a69a43fbd04d5e53caa488d4ff077ed4b3a6db783b9ed4fde40",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "isolated_http_sidecar",
+          "collector_image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "collector_code_sha256": {
+            "release_runtime.py": "c0a2eb8f1819b7120756f3afc6ab8d80b1d69527895e6060b9d54426280dc467",
+            "release_http_collector.py": "313af613a36820c6e808e9dd1d74fcf858488dd5512e3462fbe443e041d21022"
+          }
+        },
+        "complete": true
+      },
+      "expected_outcomes_confirmed": true,
+      "source_tree_hash": "3b49782d489e68aea94f3538c63e125eb2a8acb256b0e499c90ca9f4c5f2cc03",
+      "frozen_baseline_suite": {
+        "execution_status": "completed",
+        "test_status": "passed",
+        "exit_code": 0,
+        "observations": [],
+        "environment": {
+          "image_id": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "requested_image": "sha256:4f8d1afed6d58037c680221ca6dd9fb4737b7ecfa7d4809ca809fdc0c7d9b786",
+          "container_id": "835f3daadc1d7870b6875e4666238da5431df458f636de06cd2b40d1f9e20c3c",
+          "network": "none",
+          "execution_backend": "docker",
+          "source_mount": "read_only",
+          "evidence_collector": "docker_exit"
+        },
+        "output_tail": "test_array_rejected (test_existing.ExistingHttpTests.test_array_rejected) ... ok\ntest_content_type (test_existing.ExistingHttpTests.test_content_type) ... ok\ntest_empty_id_rejected (test_existing.ExistingHttpTests.test_empty_id_rejected) ... ok\ntest_health (test_existing.ExistingHttpTests.test_health) ... ok\ntest_homepage (test_existing.ExistingHttpTests.test_homepage) ... ok\ntest_invalid_json (test_existing.ExistingHttpTests.test_invalid_json) ... ok\ntest_invalid_name_rejected (test_existing.ExistingHttpTests.test_invalid_name_rejected) ... ok\ntest_large_request_rejected (test_existing.ExistingHttpTests.test_large_request_rejected) ... ok\ntest_missing_name_rejected (test_existing.ExistingHttpTests.test_missing_name_rejected) ... ok\ntest_numeric_id_rejected (test_existing.ExistingHttpTests.test_numeric_id_rejected) ... ok\ntest_object_id_rejected (test_existing.ExistingHttpTests.test_object_id_rejected) ... ok\ntest_ordinary_customer (test_existing.ExistingHttpTests.test_ordinary_customer) ... ok\ntest_repeatable_import (test_existing.ExistingHttpTests.test_repeatable_import) ... ok\ntest_unknown_route (test_existing.ExistingHttpTests.test_unknown_route) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.349s\n\nOK",
+        "complete": true
+      }
+    }
+  }
+}
