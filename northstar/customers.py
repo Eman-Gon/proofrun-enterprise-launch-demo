@@ -2,10 +2,10 @@
 
 
 def normalize_customer_id(value):
-    """Customer IDs are opaque external references; preserve their spelling."""
+    """Normalize imported references for CSV duplicate detection."""
     if not isinstance(value, str) or not value:
         raise ValueError("invalid_customer")
-    return value
+    return str(int(value))
 
 
 def import_customer(payload):

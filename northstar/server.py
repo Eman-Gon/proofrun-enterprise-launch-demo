@@ -7,6 +7,7 @@ from urllib.parse import urlsplit
 
 from . import FEATURES, RELEASE
 from .customers import import_customer
+from .preview import preview_import
 
 MAX_BODY_BYTES = 64 * 1024
 WEB_ROOT = Path(__file__).resolve().parent.parent / "web"
@@ -77,11 +78,19 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
-        if path != "/customers/import":
+        if path not in ("/customers/import", "/imports/preview"):
             self._respond(404, {"error": "not_found"})
             return
         valid, payload = self._json_body()
         if not valid:
+            return
+        if path == "/imports/preview":
+            try:
+                result = preview_import(payload)
+            except ValueError:
+                self._respond(422, {"error": "invalid_csv"})
+            else:
+                self._respond(200, result)
             return
         try:
             customer = import_customer(payload)
