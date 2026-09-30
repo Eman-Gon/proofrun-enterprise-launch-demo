@@ -1,0 +1,504 @@
+{
+  "schema": "northstar.published-replay-summary.v1",
+  "started_at": "2026-09-30T01:27:57.500879+00:00",
+  "completed_at": "2026-09-30T01:27:59.691574+00:00",
+  "execution": "Python 3.12 local processes; operator-selected repeated HTTP checks; no model calls",
+  "expected_demo_story_reproduced": true,
+  "revisions": [
+    {
+      "ref": "v1.0.0",
+      "commit": "2faecc5f99c1729325bc7ad272d9c79a2bc82e24",
+      "ordinary_tests": 14,
+      "ordinary_tests_passed": true,
+      "frozen_baseline_tests": 14,
+      "frozen_baseline_tests_passed": true,
+      "baseline_test_files_unchanged": true,
+      "legacy_contract_preserved_for_selected_checks": true,
+      "checks": [
+        {
+          "label": "numeric control",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "12345",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "12345",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "12345",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "12345",
+          "legacy_contract_preserved": true,
+          "matches_story": true
+        },
+        {
+          "label": "leading-zero identifier",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "00123",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "00123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "00123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "00123",
+          "legacy_contract_preserved": true,
+          "matches_story": true
+        },
+        {
+          "label": "partner identifier",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "abc-123",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "abc-123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "abc-123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "abc-123",
+          "legacy_contract_preserved": true,
+          "matches_story": true
+        },
+        {
+          "label": "bulk preview feature",
+          "path": "/imports/preview",
+          "method": "POST",
+          "input": {
+            "csv": "customer_id,name\n12345,Avery Chen\n67890,Jordan Lee\n"
+          },
+          "repetitions": [
+            {
+              "status": 404,
+              "body": {
+                "error": "not_found"
+              }
+            },
+            {
+              "status": 404,
+              "body": {
+                "error": "not_found"
+              }
+            }
+          ],
+          "expected_status": 404,
+          "matches_story": true
+        }
+      ]
+    },
+    {
+      "ref": "v1.1.0-rc1",
+      "commit": "641de102d613dd1b5e361ff8751ee97802cf74d8",
+      "ordinary_tests": 24,
+      "ordinary_tests_passed": true,
+      "frozen_baseline_tests": 14,
+      "frozen_baseline_tests_passed": true,
+      "baseline_test_files_unchanged": true,
+      "legacy_contract_preserved_for_selected_checks": false,
+      "checks": [
+        {
+          "label": "numeric control",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "12345",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "12345",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "12345",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "12345",
+          "legacy_contract_preserved": true,
+          "matches_story": true
+        },
+        {
+          "label": "leading-zero identifier",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "00123",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "123",
+          "legacy_contract_preserved": false,
+          "matches_story": true
+        },
+        {
+          "label": "partner identifier",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "abc-123",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 422,
+              "body": {
+                "error": "invalid_customer"
+              }
+            },
+            {
+              "status": 422,
+              "body": {
+                "error": "invalid_customer"
+              }
+            }
+          ],
+          "expected_status": 422,
+          "expected_customer_id": null,
+          "legacy_contract_preserved": false,
+          "matches_story": true
+        },
+        {
+          "label": "bulk preview feature",
+          "path": "/imports/preview",
+          "method": "POST",
+          "input": {
+            "csv": "customer_id,name\n12345,Avery Chen\n67890,Jordan Lee\n"
+          },
+          "repetitions": [
+            {
+              "status": 200,
+              "body": {
+                "total": 2,
+                "ready": 2,
+                "rejected": 0,
+                "rows": [
+                  {
+                    "row": 2,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "12345",
+                      "name": "Avery Chen"
+                    }
+                  },
+                  {
+                    "row": 3,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "67890",
+                      "name": "Jordan Lee"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "status": 200,
+              "body": {
+                "total": 2,
+                "ready": 2,
+                "rejected": 0,
+                "rows": [
+                  {
+                    "row": 2,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "12345",
+                      "name": "Avery Chen"
+                    }
+                  },
+                  {
+                    "row": 3,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "67890",
+                      "name": "Jordan Lee"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "expected_status": 200,
+          "matches_story": true
+        }
+      ]
+    },
+    {
+      "ref": "v1.1.0-fixed",
+      "commit": "6ffbc6b9f4c8173e13f904bfcb8af4a5293aeb22",
+      "ordinary_tests": 24,
+      "ordinary_tests_passed": true,
+      "frozen_baseline_tests": 14,
+      "frozen_baseline_tests_passed": true,
+      "baseline_test_files_unchanged": true,
+      "legacy_contract_preserved_for_selected_checks": true,
+      "checks": [
+        {
+          "label": "numeric control",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "12345",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "12345",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "12345",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "12345",
+          "legacy_contract_preserved": true,
+          "matches_story": true
+        },
+        {
+          "label": "leading-zero identifier",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "00123",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "00123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "00123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "00123",
+          "legacy_contract_preserved": true,
+          "matches_story": true
+        },
+        {
+          "label": "partner identifier",
+          "path": "/customers/import",
+          "method": "POST",
+          "input": {
+            "customer_id": "abc-123",
+            "name": "Avery Chen"
+          },
+          "repetitions": [
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "abc-123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            },
+            {
+              "status": 201,
+              "body": {
+                "customer": {
+                  "customer_id": "abc-123",
+                  "name": "Avery Chen"
+                },
+                "imported": true
+              }
+            }
+          ],
+          "expected_status": 201,
+          "expected_customer_id": "abc-123",
+          "legacy_contract_preserved": true,
+          "matches_story": true
+        },
+        {
+          "label": "bulk preview feature",
+          "path": "/imports/preview",
+          "method": "POST",
+          "input": {
+            "csv": "customer_id,name\n12345,Avery Chen\n67890,Jordan Lee\n"
+          },
+          "repetitions": [
+            {
+              "status": 200,
+              "body": {
+                "total": 2,
+                "ready": 2,
+                "rejected": 0,
+                "rows": [
+                  {
+                    "row": 2,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "12345",
+                      "name": "Avery Chen"
+                    }
+                  },
+                  {
+                    "row": 3,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "67890",
+                      "name": "Jordan Lee"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "status": 200,
+              "body": {
+                "total": 2,
+                "ready": 2,
+                "rejected": 0,
+                "rows": [
+                  {
+                    "row": 2,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "12345",
+                      "name": "Avery Chen"
+                    }
+                  },
+                  {
+                    "row": 3,
+                    "status": "ready",
+                    "customer": {
+                      "customer_id": "67890",
+                      "name": "Jordan Lee"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "expected_status": 200,
+          "matches_story": true
+        }
+      ]
+    }
+  ]
+}

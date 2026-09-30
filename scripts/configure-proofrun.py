@@ -71,7 +71,7 @@ def main() -> int:
         "test_paths": ["tests/*.py"],
         "test_success_pattern": r"(?m)^Ran [1-9][0-9]* tests? in [0-9.]+s$",
         "repair_paths": ["northstar/customers.py"],
-        "exclude_paths": ["README.md", "docs/DEMO.md", "docs/RESULTS.md", "scripts/*", "checks/*", ".github/*"],
+        "exclude_paths": ["README.md", "docs/DEMO.md", "docs/RESULTS.md", "docs/verification.json", "scripts/*", "checks/*", ".github/*"],
     }
     request = {
         "target_id": target["id"],

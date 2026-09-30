@@ -135,6 +135,7 @@ a model, install dependencies, modify an existing worker, or deploy the app.
 ## Present it
 
 [Presenter script](docs/DEMO.md) contains the launch story and exact actions.
+The [measured rehearsal](docs/RESULTS.md) records the three revisions' outcomes.
 The customer and commercial stakes are fictional; the feature and HTTP behavior
 are runnable. This project is intentionally small so the audience can inspect
 the whole change. It makes no claim of exhaustive or production-scale coverage.
